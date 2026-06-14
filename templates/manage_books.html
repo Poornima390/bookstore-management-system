@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2 class="mb-4">Manage Books</h2>
+
+<!-- Add Book Form -->
+<div class="card p-4 shadow mb-4">
+    <h4>Add New Book</h4>
+    <form method="POST" action="/add_book">
+        <div class="row">
+            <div class="col-md-3">
+                <input type="text" name="title" class="form-control" placeholder="Book Title" required>
+            </div>
+            <div class="col-md-3">
+                <input type="text" name="author" class="form-control" placeholder="Author" required>
+            </div>
+            <div class="col-md-2">
+                <input type="number" step="0.01" name="price" class="form-control" placeholder="Price" required>
+            </div>
+            <div class="col-md-2">
+                <input type="number" name="stock" class="form-control" placeholder="Stock" required>
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-primary w-100">Add Book</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Books Table -->
+<div class="card p-4 shadow">
+    <h4>Book List</h4>
+
+    <table class="table table-bordered table-striped mt-3">
+        <thead class="table-dark">
+            <tr>
+                <th>SL No</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Price (₹)</th>
+                <th>Stock</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for book in books %}
+            <tr>
+                <!-- Serial Number -->
+                <td>{{ loop.index }}</td>
+
+                <td>{{ book.title }}</td>
+                <td>{{ book.author }}</td>
+                <td>{{ book.price }}</td>
+
+                <!-- Stock Highlight if Low -->
+                <td>
+                    {% if book.stock < 5 %}
+                        <span class="text-danger fw-bold">{{ book.stock }} (Low)</span>
+                    {% else %}
+                        {{ book.stock }}
+                    {% endif %}
+                </td>
+
+                <td>
+                    <a class="btn btn-sm btn-warning"
+                       href="/edit_book/{{ book.id }}">
+                       Edit
+                    </a>
+
+                    <form action="/delete_book/{{ book.id }}"
+                    method="get"
+                    onsubmit="return confirm('Are you sure you want to delete this book?');"
+                    style="display:inline;">
+
+                    <button type="submit" class="btn btn-sm btn-danger">
+                    Delete
+                    </button>
+
+                    </form>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>All Bills</h2>
+
+<div class="card p-4 shadow mt-4">
+    <table class="table table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>S.No</th>
+                <th>Customer</th>
+                <th>Phone</th>
+                <th>Total</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for bill in bills %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ bill.customer_name }}</td>
+                <td>{{ bill.phone }}</td>
+                <td>{{ bill.total_amount }}</td>
+                <td>{{ bill.bill_date }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

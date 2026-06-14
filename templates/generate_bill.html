@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Generate Bill</h2>
+
+<div class="row mt-4">
+
+    <!-- Add Book -->
+    <div class="col-md-6">
+        <div class="card p-4 shadow">
+            <h5>Add Book</h5>
+            <form method="POST" action="/add_to_cart">
+                <select name="book_id" class="form-control mb-3" required>
+                    {% for book in books %}
+                    <option value="{{ book.id }}">
+                        {{ book.title }} (Stock: {{ book.stock }})
+                    </option>
+                    {% endfor %}
+                </select>
+
+                <input type="number" name="quantity" class="form-control mb-3" placeholder="Quantity" required>
+
+                <button class="btn btn-dark w-100">Add to Bill</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Cart -->
+    <div class="col-md-6">
+        <div class="card p-4 shadow">
+            <h5>Current Bill</h5>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Book</th>
+                        <th>Qty</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in cart %}
+                    <tr>
+                        <td>{{ item.title }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>{{ item.total }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <h5>Total: ₹ {{ total }}</h5>
+
+            <form method="POST" action="/finalize_bill">
+                <input type="text" name="customer_name" class="form-control mb-2" placeholder="Customer Name" required>
+                <input type="text" name="phone" class="form-control mb-2" placeholder="Phone" required>
+                <button class="btn btn-success w-100">Generate Final Bill</button>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

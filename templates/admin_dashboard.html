@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Admin Dashboard</h2>
+<hr>
+
+<div class="dashboard-cards">
+
+<div class="card">
+<h3>Total Books</h3>
+<h2>{{ total_books }}</h2>
+</div>
+
+<div class="card">
+<h3>Total Earnings</h3>
+<h2>₹ {{ earnings }}</h2>
+</div>
+
+<div class="card">
+<h3>Total Bills</h3>
+<h2>{{ total_bills }}</h2>
+</div>
+
+<div class="card">
+<h3>Low Stock Books</h3>
+<h2>{{ low_stock }}</h2>
+</div>
+
+<div class="card">
+<h3>Out Of Stock</h3>
+<h2>{{ out_stock }}</h2>
+</div>
+
+<div class="card">
+<h3>Best Selling Book</h3>
+<h2>{{ best_selling }}</h2>
+</div>
+
+</div>
+
+<div class="chart-card">
+<h3>Monthly Sales</h3>
+
+<canvas id="salesChart"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+new Chart(
+document.getElementById('salesChart'),
+{
+type:'bar',
+data:{
+labels:{{ months|tojson }},
+datasets:[{
+label:'Monthly Sales',
+data:{{ sales|tojson }}
+}]
+}
+}
+);
+</script>
+
+{% endblock %}

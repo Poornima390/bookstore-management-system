@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Manage Books</h2>
+
+<div class="card p-4 shadow mb-4">
+    <h5>Add New Book</h5>
+    <form method="POST" action="/add_book">
+        <div class="row">
+            <div class="col-md-3">
+                <input type="text" name="title" class="form-control" placeholder="Title" required>
+            </div>
+            <div class="col-md-3">
+                <input type="text" name="author" class="form-control" placeholder="Author" required>
+            </div>
+            <div class="col-md-2">
+                <input type="number" name="price" class="form-control" placeholder="Price" required>
+            </div>
+            <div class="col-md-2">
+                <input type="number" name="stock" class="form-control" placeholder="Stock" required>
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-success w-100">Add Book</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="card p-4 shadow">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>S.No</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Price</th>
+                <th>Stock</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for book in books %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ book.title }}</td>
+                <td>{{ book.author }}</td>
+                <td>{{ book.price }}</td>
+                <td>{{ book.stock }}</td>
+                <td>
+                    <a href="/edit_book/{{ book.id }}" class="btn btn-primary btn-sm">Edit</a>
+                    <a href="/delete_book/{{ book.id }}" class="btn btn-danger btn-sm">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}
